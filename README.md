@@ -1,3 +1,3 @@
 BTK React ders takibi için oluşturulmuş repository
 
-Bootstrap 5 kullanılmaktadır
+json-server --watch db.json 
