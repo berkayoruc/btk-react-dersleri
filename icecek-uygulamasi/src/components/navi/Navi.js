@@ -1,17 +1,14 @@
 import React, { Component } from "react";
 import {
   Collapse,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
   Nav,
   Navbar,
   NavbarBrand,
   NavbarToggler,
   NavItem,
   NavLink,
-  UncontrolledDropdown,
 } from "reactstrap";
+import CartSummary from "../cart/CartSummary";
 
 class Navi extends Component {
   constructor(props) {
@@ -40,17 +37,7 @@ class Navi extends Component {
               <NavItem>
                 <NavLink>Form2 Demo</NavLink>
               </NavItem>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  Cart
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem divider />
-                  <DropdownItem>
-                    <NavLink>Go to cart</NavLink>
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+              <CartSummary />
             </Nav>
           </Collapse>
         </Navbar>

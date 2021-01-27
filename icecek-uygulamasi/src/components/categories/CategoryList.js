@@ -1,12 +1,37 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { ListGroup, ListGroupItem, Badge } from "reactstrap";
+import { bindActionCreators } from "redux";
+import * as categoryActions from "../../redux/actions/categoryActions";
+import * as productActions from "../../redux/actions/productActions";
 
 class CategoryList extends Component {
+  componentDidMount() {
+    this.props.actions.getCategories();
+  }
+
+  selectCategory = (category) => {
+    this.props.actions.changeCategory(category);
+    this.props.actions.getProducts(category.id);
+  };
+
   render() {
     return (
       <div>
-        <h3>Categories</h3>
-        <h5>Seçili kategori: {this.props.currentCategory.categoryName}</h5>
+        <h3>
+          <Badge color="warning">Categories</Badge>
+        </h3>
+        <ListGroup>
+          {this.props.categories.map((c) => (
+            <ListGroupItem
+              active={c.id === this.props.currentCategory.id}
+              onClick={() => this.selectCategory(c)}
+              key={c.id}
+            >
+              {c.categoryName}
+            </ListGroupItem>
+          ))}
+        </ListGroup>
       </div>
     );
   }
@@ -15,7 +40,24 @@ class CategoryList extends Component {
 function mapState2Props(state) {
   return {
     currentCategory: state.changeCategoryReducer,
+    categories: state.categoryListReducer,
   };
 }
 
-export default connect(mapState2Props)(CategoryList);
+function mapDispatch2Props(dispatch) {
+  return {
+    actions: {
+      getCategories: bindActionCreators(
+        categoryActions.getCategories,
+        dispatch
+      ),
+      changeCategory: bindActionCreators(
+        categoryActions.changeCategory,
+        dispatch
+      ),
+      getProducts: bindActionCreators(productActions.getProducts, dispatch),
+    },
+  };
+}
+
+export default connect(mapState2Props, mapDispatch2Props)(CategoryList);
